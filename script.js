@@ -65,6 +65,17 @@ const Gameboard = (function() {
         break;
       }
     }
-    // console.log(board);
    })();
+
+  const displayTable = (() => {
+    document.querySelector("#one").textContent = board[0];
+    document.querySelector("#two").textContent = board[1];
+    document.querySelector("#three").textContent = board[2];
+    document.querySelector("#four").textContent = board[3];
+    document.querySelector("#five").textContent = board[4];
+    document.querySelector("#six").textContent = board[5];
+    document.querySelector("#seven").textContent = board[6];
+    document.querySelector("#eight").textContent = board[7];
+    document.querySelector("#nine").textContent = board[8];
+  })();
 })();
