@@ -9,8 +9,8 @@ const Gameboard = (function() {
     return { name, controller };
   };
 
-  const playerOne = createPlayer("PlayerX", "X");
-  const playerTwo = createPlayer("PlayerO", "O")
+  const playerOne = createPlayer("Player1", "X");
+  const playerTwo = createPlayer("Player2", "O")
 
   const winRound = () => {
     this.x = (
@@ -41,41 +41,36 @@ const Gameboard = (function() {
 
     return { x, o }
   }
-
-  const playRound = (() => {
-    while (board.filter(element => element == "").length > 0) {
-      playerOneIdx = prompt("PLAYER 1: Enter a number 1-9.") - 1;
-      board[playerOneIdx] = playerOne.controller;
-      console.log(board);
-
+  
+  const playRound = () => {
       if (winRound().x) {
-        console.log("Player 1 wins!")
-        break;
+        console.log("Player 1 wins!");
       } else if (board.filter(element => element == "").length == 0 && winRound().x == false && winRound().o == false) {
         console.log("Tie!");
-        break;
       }
-
-      playerTwoIdx = prompt("PLAYER 2: Enter a number 1-9.") - 1;
-      board[playerTwoIdx] = playerTwo.controller;
-      console.log(board);
 
       if (winRound().o) {
-        console.log("Player 2 wins!")
-        break;
+        console.log("Player 2 wins!");
       }
-    }
-   })();
+   };
 
-  const displayTable = (() => {
-    document.querySelector("#one").textContent = board[0];
-    document.querySelector("#two").textContent = board[1];
-    document.querySelector("#three").textContent = board[2];
-    document.querySelector("#four").textContent = board[3];
-    document.querySelector("#five").textContent = board[4];
-    document.querySelector("#six").textContent = board[5];
-    document.querySelector("#seven").textContent = board[6];
-    document.querySelector("#eight").textContent = board[7];
-    document.querySelector("#nine").textContent = board[8];
-  })();
+  let flag = true;
+  const boardCells = document.querySelectorAll(".cell");
+  boardCells.forEach((cell) => {
+    cell.addEventListener("click", () => {
+      if (flag == true) {
+        cell.textContent = playerOne.controller;
+        board[Array.from(boardCells).indexOf(cell)] = playerOne.controller;
+        flag = false;
+        // console.log(board);
+        playRound();
+      } else {
+        cell.textContent = playerTwo.controller;
+        board[Array.from(boardCells).indexOf(cell)] = playerTwo.controller;
+        flag = true;
+        // console.log(board);
+        playRound();
+      }
+    });
+  });
 })();
