@@ -9,8 +9,8 @@ const Gameboard = (function() {
     return { name, controller };
   };
 
-  const playerOne = createPlayer("X", "X");
-  const playerTwo = createPlayer("O", "O")
+  const playerOne = createPlayer(prompt("X: What's your name?", "X"), "X");
+  const playerTwo = createPlayer(prompt("O: What's your name?", "O"), "O")
 
   const winRound = () => {
     this.x = (
@@ -89,5 +89,3 @@ const Gameboard = (function() {
     });
   });
 })();
-
-// Clean up the interface to allow players to put in their names
