@@ -54,7 +54,6 @@ const Gameboard = (function() {
   
   const playRound = () => {
       if (winRound().x) {
-        console.log("Player 1 wins!");
         document.querySelector("p").textContent = `${playerOne.name} wins!`;
         restartGame();
       } else if (board.filter(element => element == "").length == 0 && winRound().x == false && winRound().o == false) {
@@ -78,13 +77,11 @@ const Gameboard = (function() {
         board[cellIndex] = playerOne.controller;
         flag = false;
         playRound();
-        console.log(board);
       } else if (flag == false && board[cellIndex] == "") {
         cell.textContent = playerTwo.controller;
         board[cellIndex] = playerTwo.controller;
         flag = true;
         playRound();
-        console.log(board);
       }
     });
   });
