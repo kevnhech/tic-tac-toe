@@ -9,8 +9,8 @@ const Gameboard = (function() {
     return { name, controller };
   };
 
-  const playerOne = createPlayer("Player1", "X");
-  const playerTwo = createPlayer("Player2", "O")
+  const playerOne = createPlayer("X", "X");
+  const playerTwo = createPlayer("O", "O")
 
   const winRound = () => {
     this.x = (
@@ -41,36 +41,53 @@ const Gameboard = (function() {
 
     return { x, o }
   }
+
+  const restartGame = () => {
+    let button = document.createElement("button");
+    let body = document.querySelector("body");
+    button.textContent = "Restart";
+    body.appendChild(button);
+    button.addEventListener("click", () => {
+      window.location.reload();
+    });
+  }
   
   const playRound = () => {
       if (winRound().x) {
         console.log("Player 1 wins!");
+        document.querySelector("p").textContent = `${playerOne.name} wins!`;
+        restartGame();
       } else if (board.filter(element => element == "").length == 0 && winRound().x == false && winRound().o == false) {
-        console.log("Tie!");
+        document.querySelector("p").textContent = "Tie!";
+        restartGame();
       }
 
       if (winRound().o) {
-        console.log("Player 2 wins!");
+        document.querySelector("p").textContent = `${playerTwo.name} wins!`;
+        restartGame();
       }
    };
 
   let flag = true;
   const boardCells = document.querySelectorAll(".cell");
   boardCells.forEach((cell) => {
+    let cellIndex = Array.from(boardCells).indexOf(cell);
     cell.addEventListener("click", () => {
-      if (flag == true) {
+      if (flag == true && board[cellIndex] == "") {
         cell.textContent = playerOne.controller;
-        board[Array.from(boardCells).indexOf(cell)] = playerOne.controller;
+        board[cellIndex] = playerOne.controller;
         flag = false;
-        // console.log(board);
         playRound();
-      } else {
+        console.log(board);
+      } else if (flag == false && board[cellIndex] == "") {
         cell.textContent = playerTwo.controller;
-        board[Array.from(boardCells).indexOf(cell)] = playerTwo.controller;
+        board[cellIndex] = playerTwo.controller;
         flag = true;
-        // console.log(board);
         playRound();
+        console.log(board);
       }
     });
   });
 })();
+
+// Clean up the interface to allow players to put in their names
